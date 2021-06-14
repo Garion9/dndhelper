@@ -1,7 +1,7 @@
 from Database_Module import DatabaseHandler
 from Campaign_Module import *
 
-world = WorldMap.map_new(5, 3, (0, 0))
+world = Campaign.campaign_new("Bardzo długa nazwa testowa dla tej mapy specjalnej troski", 5, 3, (0, 0))
 print(world.grid)
 print(world.current_field)
 print(world.visited_fields)

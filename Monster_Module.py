@@ -93,3 +93,9 @@ class Monster:
 
     def get_charisma_modifier(self):
         return self.get_attribute_modifier("charisma")
+
+    def get_exp_value(self):
+        return self.challenge_table[self.challenge_rating][0]
+
+    def get_prof_bonus(self):
+        return self.challenge_table[self.challenge_rating][1]

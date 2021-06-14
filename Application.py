@@ -93,6 +93,7 @@ def login_frame():
         border: 1px solid black;
         margin: 0px;
         height: 25px;
+        background-color: white;
         font-size: 15px;
     ''')
     loginLabel = QLabel("Login:")
@@ -108,6 +109,7 @@ def login_frame():
        border: 1px solid black;
        margin: 0px;
        height: 25px;
+       background-color: white;
        font-size: 15px;
    ''')
     passwordInput.setEchoMode(QLineEdit.Password)
@@ -220,6 +222,7 @@ def register_frame():
             border: 1px solid black;
             margin: 0px;
             height: 25px;
+            background-color: white;
             font-size: 15px;
         ''')
     loginRegex = QRegExp('^[0-9a-zA-ZąćęłńóśźżĄĘĆĘŁŃÓŚŹŻ]{30}$')
@@ -238,6 +241,7 @@ def register_frame():
            border: 1px solid black;
            margin: 0px;
            height: 25px;
+           background-color: white;
            font-size: 15px;
        ''')
     passwordRegex = QRegExp('^[0-9a-zA-ZąćęłńóśźżĄĘĆĘŁŃÓŚŹŻ!@#$%&_-?]{30}$')
@@ -257,6 +261,7 @@ def register_frame():
                border: 1px solid black;
                margin: 0px;
                height: 25px;
+               background-color: white;
                font-size: 15px;
            ''')
     nicknameRegex = QRegExp('^[0-9a-zA-ZąćęłńóśźżĄĘĆĘŁŃÓŚŹŻ]{30}$')
