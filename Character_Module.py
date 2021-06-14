@@ -48,8 +48,12 @@ class Character:
     @classmethod
     def character_new(cls, user, name, c_class, race, alignment, background, strength, dexterity, constitution,
                       intelligence, wisdom, charisma, armor_class, speed, hit_dice_faces,
-                      features_traits, proficiencies_languages, equipment, notes,
-                      inspiration=0, level=1, exp=0, max_hit_points=0):
+                      features_traits, proficiencies_languages, equipment, notes, spells,
+                      inspiration=0, level=1, exp=0, skill_proficiency=None, saving_throw_proficiency=None, max_hit_points=0):
+        if saving_throw_proficiency is None:
+            saving_throw_proficiency = []
+        if skill_proficiency is None:
+            skill_proficiency = []
         character_data = {"user": user,
                           "name": name,
                           "c_class": c_class,
@@ -65,8 +69,8 @@ class Character:
                           "intelligence": intelligence,
                           "wisdom": wisdom,
                           "charisma": charisma,
-                          "skill_proficiency": [],
-                          "saving_throw_proficiency": [],
+                          "skill_proficiency": skill_proficiency,
+                          "saving_throw_proficiency": saving_throw_proficiency,
                           "armor_class": armor_class,
                           "speed": speed,
                           "hit_dice_faces": hit_dice_faces,
@@ -79,7 +83,7 @@ class Character:
                           "proficiencies_languages": proficiencies_languages,
                           "equipment": equipment,
                           "notes": notes,
-                          "spells_list": []}
+                          "spells_list": spells}
         character = cls(character_data)
         character.initialize_max_hp()
         character.current_hit_points = character.max_hit_points
@@ -109,7 +113,10 @@ class Character:
                "\nOther proficiencies and languages: " + self.proficiencies_languages + \
                "\nEquipment: " + self.equipment + \
                "\nNotes: " + self.notes + \
-               "\nSpells list: " + str(self.spells_list)
+               "\nSpells list: " + self.spells_list
+
+    def get_id(self):
+        return self._id
 
     def get_proficiency_bonus(self):
         return ((self.level-1)//4)+2
@@ -177,18 +184,12 @@ class Character:
         else:
             self.level += 1
             self.increase_max_hp()
-            self.current_hit_points = self.max_hit_points
+            self.current_hit_points += self.max_hit_points - self.current_hit_points
             self.no_hit_dice += 1
 
     def increase_max_hp(self):
-        print("Choose ROLL to roll for hp or SET to get set hp increase")
-        choice = input()
-        if choice == "ROLL":
-            self.max_hit_points += Dice.roll_dice(1, self.hit_dice_faces)
-            self.max_hit_points += self.get_constitution_modifier()
-        elif choice == "SET":
-            self.max_hit_points += (self.hit_dice_faces//2)+1
-            self.max_hit_points += self.get_constitution_modifier()
+        self.max_hit_points += Dice.roll_dice(1, self.hit_dice_faces)[0]
+        self.max_hit_points += self.get_constitution_modifier()
 
     def initialize_max_hp(self):
         self.max_hit_points = self.hit_dice_faces + self.get_constitution_modifier()

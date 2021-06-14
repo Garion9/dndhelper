@@ -1,3 +1,4 @@
+from bson.objectid import ObjectId
 from passlib.context import CryptContext
 from Database_Module import *
 
@@ -8,10 +9,23 @@ pwd_context = CryptContext(
     )
 
 class User:
-    def __init__(self, login, nickname, password):
-        self.login = login
-        self.nickname = nickname
-        self.password = password
+    def __init__(self, user_data):
+        self._id = ObjectId()
+        self.login = None
+        self.nickname = None
+        self.password = None
+        for key in user_data:
+            setattr(self, key, user_data[key])
+
+    @classmethod
+    def user_new(cls, login, nickname, password):
+        user_data = {"login": login, "nickname": nickname, "password": password}
+        user = cls(user_data)
+        return user
+
+    @classmethod
+    def user_from_db_entry(cls, db_entry):
+        return cls(db_entry)
 
 # throws pymongo.errors.DuplicateKeyError
 def register_user(login, nickname, password):

@@ -1,5 +1,5 @@
 from Database_Module import DatabaseHandler
-from Map_Module import *
+from Campaign_Module import *
 
 world = WorldMap.map_new(5, 3, (0, 0))
 print(world.grid)
@@ -19,9 +19,9 @@ world.add_field_note((2, 2), "Tutaj jest drzewiec")
 print(world.grid)
 print(world.get_field_note((2, 2)))
 
-#DatabaseHandler.insert_world_map(world)
-for db_world_map in DatabaseHandler.get_world_maps_collection():
-    world_map = WorldMap.map_from_db_entry(db_world_map)
-    print(world_map.grid)
-    print(world_map.visited_fields)
-    print(world_map.current_field)
+DatabaseHandler.insert_campaign(world)
+#for db_world_map in DatabaseHandler.get_world_maps_collection():
+#    world_map = WorldMap.map_from_db_entry(db_world_map)
+#    print(world_map.grid)
+#    print(world_map.visited_fields)
+#    print(world_map.current_field)

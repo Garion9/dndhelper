@@ -2,12 +2,14 @@ import random as r
 
 def roll_dice(count, faces):
     result = 0
-    while count:
+    rolls = []
+    while count > 0:
         roll = r.randint(1, faces)
+        rolls.append(roll)
         #print("roll: ", roll)
         result += roll
         count -= 1
-    return result
+    return result, rolls
 
 def roll_d4(count=1):
     return roll_dice(count, 4)
