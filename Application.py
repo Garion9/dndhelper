@@ -991,11 +991,7 @@ def map_frame():
                 change = stream.try_next()
                 if change is not None and change["documentKey"]["_id"] == battlemap.get_id():
                     if change["operationType"] == "update":
-                        print("update")
-                        print(change["updateDescription"])
-                        print(change["fullDocument"])
                         updatedBattlemap = BattleMap.battlemap_from_db_entry(change["fullDocument"])
-                        print(updatedBattlemap)
                         battlemapTokenPositions = list(battlemap.get_active_tokens().keys())
                         for key in battlemapTokenPositions:
                             tokens[key[1]][key[0]].setStyleSheet("border-radius: 40px;"
@@ -1009,9 +1005,6 @@ def map_frame():
                                                                  "background-color: " + updatedBattlemap.get_token_color(key[0], key[1]) + ";")
                             tokens[key[1]][key[0]].setText(updatedBattlemap.get_token_label(key[0], key[1]))
                             battlemap.add_token(key[0], key[1], updatedBattlemap.get_token_color(key[0], key[1]), updatedBattlemap.get_token_label(key[0], key[1]), updatedBattlemap.get_token_owner(key[0], key[1]))
-                    else:
-                        print(change)
-                    print("\n")
 
     global battlemapWindow
     battlemapWindow = QWidget()
@@ -1081,10 +1074,6 @@ def map_frame():
             right_button_pressed = False
 
     def move_event(event, label, x, y):
-        if event.button() == QtCore.Qt.LeftButton:
-            print("left button")
-        elif event.button() == QtCore.Qt.RightButton:
-            print("right button")
         if (x, y) in battlemap.get_active_tokens().keys() and (userRole is UserRole.DUNGEON_MASTER or battlemap.get_token_owner(x, y) == user.login):
             nonlocal movableToken
             movableToken.hide()
@@ -1774,7 +1763,6 @@ def character_creation_frame():
             int(inspirationField.text()), int(levelField.text()), int(expField.text()),
             skillList, savingList
         )
-        print(new_character)
         DatabaseHandler.insert_character(new_character)
 
     global creationWindow
