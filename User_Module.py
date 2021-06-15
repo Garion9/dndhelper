@@ -30,7 +30,7 @@ class User:
 # throws pymongo.errors.DuplicateKeyError
 def register_user(login, nickname, password):
     password = pwd_context.encrypt(password)
-    user = User(login, nickname, password)
+    user = User.user_new(login, nickname, password)
     DatabaseHandler.insert_user(user)
 
 # throws TypeError
