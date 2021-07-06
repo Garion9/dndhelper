@@ -2,7 +2,7 @@ import pymongo
 
 class DatabaseHandler:
     client = pymongo.MongoClient(
-        "mongodb+srv://Garion:hwTFr1zLhbaUDXbX@clusterdndhelper.ik5cn.mongodb.net/DBDnDHelper?retryWrites=true&w=majority")
+        "mongodb+srv://Garion:hwTFr1zLhbaUDXbX@clusterdndhelper.ik5cn.mongodb.net/DBDnDHelper?retryWrites=true&w=majority", ssl=True, ssl_cert_reqs="CERT_NONE")
     db = client["DBDnDHelper"]
     characters_collection = db["Characters"]
     users_collection = db["Users"]
