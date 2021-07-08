@@ -170,7 +170,7 @@ class Character:
         if self.level < 20:
             return self.experience_table[self.level-1]
         else:
-            return self.experience_table[19]
+            return self.experience_table[18]
 
     def add_exp(self, exp_amount):
         self.exp += exp_amount

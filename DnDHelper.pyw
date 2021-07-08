@@ -18,6 +18,7 @@ from UserRoleEnum import UserRole
 from Character_Module import Character
 from Campaign_Module import Campaign
 from User_Module import *
+from Utilities import wrap_text_for_display, trim_display
 
 app = QApplication(sys.argv)
 mainWindow = QMainWindow()
@@ -402,6 +403,7 @@ def campaign_frame():
             new_campaign = Campaign.campaign_new(addName.text(), new_battlemap.get_id())
             DatabaseHandler.insert_campaign(new_campaign)
             addDialog.close()
+            campaign_frame()
         addDialog = QDialog()
         addDialog.setWindowTitle("Add new campaign")
         addDialog.setStyleSheet('''
@@ -763,6 +765,7 @@ def item_frame():
             new_item = Item.item_new(nameInput.text(), descInput.toPlainText())
             DatabaseHandler.insert_item(new_item)
             addDialog.close()
+            item_frame()
         addDialog = QDialog()
         addDialog.setWindowTitle("Add new item")
         addDialog.setStyleSheet('''
@@ -875,6 +878,7 @@ def spell_frame():
             new_spell = Spell.spell_new(nameInput.text(), descInput.toPlainText())
             DatabaseHandler.insert_spell(new_spell)
             addDialog.close()
+            spell_frame()
 
         addDialog = QDialog()
         addDialog.setWindowTitle("Add new item")
@@ -1457,6 +1461,7 @@ def monster_frame():
                               )
             DatabaseHandler.insert_monster(new_monster)
             addDialog.close()
+            monster_frame()
 
         addDialog = QDialog()
         addDialog.setWindowTitle("Add new item")
@@ -1764,6 +1769,8 @@ def character_creation_frame():
             skillList, savingList
         )
         DatabaseHandler.insert_character(new_character)
+        creationWindow.hide()
+        character_frame()
 
     global creationWindow
     creationWindow = QWidget()
@@ -1781,7 +1788,7 @@ def character_creation_frame():
     nameLabel.setAlignment(QtCore.Qt.AlignCenter)
     nameField = QLineEdit()
     nameField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
         ''')
     nameField.setFixedWidth(75)
     nameField.setAlignment(QtCore.Qt.AlignCenter)
@@ -1795,7 +1802,7 @@ def character_creation_frame():
     classLabel.setAlignment(QtCore.Qt.AlignCenter)
     classField = QLineEdit()
     classField.setStyleSheet('''color: black;
-                background-color: white;
+                background-color: whitesmoke;
         ''')
     classField.setFixedWidth(75)
     classField.setAlignment(QtCore.Qt.AlignCenter)
@@ -1809,7 +1816,7 @@ def character_creation_frame():
     levelLabel.setAlignment(QtCore.Qt.AlignCenter)
     levelField = QLineEdit()
     levelField.setStyleSheet('''color: black;
-                background-color: white;
+                background-color: whitesmoke;
         ''')
     levelField.setFixedWidth(75)
     levelField.setAlignment(QtCore.Qt.AlignCenter)
@@ -1823,7 +1830,7 @@ def character_creation_frame():
     backgroundLabel.setAlignment(QtCore.Qt.AlignCenter)
     backgroundField = QLineEdit()
     backgroundField.setStyleSheet('''color: black;
-                background-color: white;
+                background-color: whitesmoke;
         ''')
     backgroundField.setFixedWidth(75)
     backgroundField.setAlignment(QtCore.Qt.AlignCenter)
@@ -1835,9 +1842,9 @@ def character_creation_frame():
     playerBox.setAlignment(QtCore.Qt.AlignCenter)
     playerLabel = QLabel("Player:")
     playerLabel.setAlignment(QtCore.Qt.AlignCenter)
-    playerField = QLineEdit(user.login)
+    playerField = QLineEdit(user.nickname)
     playerField.setStyleSheet('''color: black;
-                background-color: white;
+                background-color: whitesmoke;
         ''')
     playerField.setDisabled(True)
     playerField.setFixedWidth(75)
@@ -1852,7 +1859,7 @@ def character_creation_frame():
     raceLabel.setAlignment(QtCore.Qt.AlignCenter)
     raceField = QLineEdit()
     raceField.setStyleSheet('''color: black;
-                background-color: white;
+                background-color: whitesmoke;
         ''')
     raceField.setFixedWidth(75)
     raceField.setAlignment(QtCore.Qt.AlignCenter)
@@ -1866,7 +1873,7 @@ def character_creation_frame():
     alignmentLabel.setAlignment(QtCore.Qt.AlignCenter)
     alignmentField = QLineEdit()
     alignmentField.setStyleSheet('''color: black;
-                background-color: white;
+                background-color: whitesmoke;
         ''')
     alignmentField.setFixedWidth(75)
     alignmentField.setAlignment(QtCore.Qt.AlignCenter)
@@ -1880,7 +1887,7 @@ def character_creation_frame():
     expLabel.setAlignment(QtCore.Qt.AlignCenter)
     expField = QLineEdit()
     expField.setStyleSheet('''color: black;
-                background-color: white;
+                background-color: whitesmoke;
         ''')
     expField.setFixedWidth(75)
     expField.setAlignment(QtCore.Qt.AlignCenter)
@@ -1894,7 +1901,7 @@ def character_creation_frame():
     inspirationLabel.setAlignment(QtCore.Qt.AlignCenter)
     inspirationField = QLineEdit("0")
     inspirationField.setStyleSheet('''color: black;
-                background-color: white;
+                background-color: whitesmoke;
         ''')
     inspirationField.setFixedWidth(75)
     inspirationField.setAlignment(QtCore.Qt.AlignCenter)
@@ -1908,7 +1915,7 @@ def character_creation_frame():
     strLabel.setAlignment(QtCore.Qt.AlignCenter)
     strField = QLineEdit("0")
     strField.setStyleSheet('''color: black;
-                background-color: white;
+                background-color: whitesmoke;
         ''')
     strField.setFixedWidth(75)
     strField.setAlignment(QtCore.Qt.AlignCenter)
@@ -1922,7 +1929,7 @@ def character_creation_frame():
     dexLabel.setAlignment(QtCore.Qt.AlignCenter)
     dexField = QLineEdit("0")
     dexField.setStyleSheet('''color: black;
-                background-color: white;
+                background-color: whitesmoke;
         ''')
     dexField.setFixedWidth(75)
     dexField.setAlignment(QtCore.Qt.AlignCenter)
@@ -1936,7 +1943,7 @@ def character_creation_frame():
     constLabel.setAlignment(QtCore.Qt.AlignCenter)
     constField = QLineEdit("0")
     constField.setStyleSheet('''color: black;
-                background-color: white;
+                background-color: whitesmoke;
         ''')
     constField.setFixedWidth(75)
     constField.setAlignment(QtCore.Qt.AlignCenter)
@@ -1950,7 +1957,7 @@ def character_creation_frame():
     intLabel.setAlignment(QtCore.Qt.AlignCenter)
     intField = QLineEdit("0")
     intField.setStyleSheet('''color: black;
-                background-color: white;
+                background-color: whitesmoke;
         ''')
     intField.setFixedWidth(75)
     intField.setAlignment(QtCore.Qt.AlignCenter)
@@ -1964,7 +1971,7 @@ def character_creation_frame():
     wisLabel.setAlignment(QtCore.Qt.AlignCenter)
     wisField = QLineEdit("0")
     wisField.setStyleSheet('''color: black;
-                background-color: white;
+                background-color: whitesmoke;
         ''')
     wisField.setFixedWidth(75)
     wisField.setAlignment(QtCore.Qt.AlignCenter)
@@ -1978,7 +1985,7 @@ def character_creation_frame():
     chaLabel.setAlignment(QtCore.Qt.AlignCenter)
     chaField = QLineEdit("0")
     chaField.setStyleSheet('''color: black;
-                background-color: white;
+                background-color: whitesmoke;
         ''')
     chaField.setFixedWidth(75)
     chaField.setAlignment(QtCore.Qt.AlignCenter)
@@ -2026,7 +2033,7 @@ def character_creation_frame():
     armorLabel.setAlignment(QtCore.Qt.AlignCenter)
     armorField = QLineEdit("0")
     armorField.setStyleSheet('''color: black;
-                background-color: white;
+                background-color: whitesmoke;
         ''')
     armorField.setFixedWidth(75)
     armorField.setAlignment(QtCore.Qt.AlignCenter)
@@ -2040,7 +2047,7 @@ def character_creation_frame():
     speedLabel.setAlignment(QtCore.Qt.AlignCenter)
     speedField = QLineEdit("0")
     speedField.setStyleSheet('''color: black;
-                background-color: white;
+                background-color: whitesmoke;
         ''')
     speedField.setFixedWidth(75)
     speedField.setAlignment(QtCore.Qt.AlignCenter)
@@ -2054,7 +2061,7 @@ def character_creation_frame():
     hitDiceLabel.setAlignment(QtCore.Qt.AlignCenter)
     hitDiceField = QLineEdit()
     hitDiceField.setStyleSheet('''color: black;
-                background-color: white;
+                background-color: whitesmoke;
         ''')
     hitDiceField.setFixedWidth(75)
     hitDiceField.setAlignment(QtCore.Qt.AlignCenter)
@@ -2068,7 +2075,7 @@ def character_creation_frame():
     traitsLabel.setAlignment(QtCore.Qt.AlignCenter)
     traitsField = QTextEdit()
     traitsField.setStyleSheet('''color: black;
-                background-color: white;
+                background-color: whitesmoke;
         ''')
     traitsField.setFixedWidth(250)
     traitsField.setFixedHeight(125)
@@ -2083,7 +2090,7 @@ def character_creation_frame():
     profLangLabel.setAlignment(QtCore.Qt.AlignCenter)
     profLangField = QTextEdit()
     profLangField.setStyleSheet('''color: black;
-                background-color: white;
+                background-color: whitesmoke;
         ''')
     profLangField.setFixedWidth(250)
     profLangField.setFixedHeight(125)
@@ -2098,7 +2105,7 @@ def character_creation_frame():
     eqLabel.setAlignment(QtCore.Qt.AlignCenter)
     eqField = QTextEdit()
     eqField.setStyleSheet('''color: black;
-                background-color: white;
+                background-color: whitesmoke;
         ''')
     eqField.setFixedWidth(250)
     eqField.setFixedHeight(125)
@@ -2113,7 +2120,7 @@ def character_creation_frame():
     spellLabel.setAlignment(QtCore.Qt.AlignCenter)
     spellField = QTextEdit()
     spellField.setStyleSheet('''color: black;
-                background-color: white;
+                background-color: whitesmoke;
         ''')
     spellField.setFixedWidth(250)
     spellField.setFixedHeight(125)
@@ -2127,7 +2134,7 @@ def character_creation_frame():
     grid.addWidget(notesLabel, 12, 0)
     notesField = QTextEdit()
     notesField.setStyleSheet('''color: black;
-                background-color: white;
+                background-color: whitesmoke;
         ''')
     notesField.setFixedWidth(800)
     notesField.setFixedHeight(125)
@@ -2162,6 +2169,13 @@ def character_sheet_frame(character_id):
         hpMaxLabel.setText(" / " + str(character.max_hit_points))
         hitDiceFacesLabel.setText(" / " + str(character.level) + " d" + str(character.hit_dice_faces))
         hitDiceField.setText(str(character.no_hit_dice))
+        traitsField.setText(wrap_text_for_display(character.features_traits))
+        profLangField.setText(wrap_text_for_display(character.proficiencies_languages))
+        eqField.setText(wrap_text_for_display(character.equipment))
+        spellField.setText(wrap_text_for_display(character.spells_list))
+        notesField.setText(wrap_text_for_display(character.notes))
+        for field in [traitsField, profLangField, eqField, spellField, notesField]:
+            trim_display(field)
 
 
     def save_changes():
@@ -2221,7 +2235,7 @@ def character_sheet_frame(character_id):
     nameLabel.setAlignment(QtCore.Qt.AlignCenter)
     nameField = QLineEdit(character.name)
     nameField.setStyleSheet('''color: black;
-        background-color: white;
+        background-color: whitesmoke;
     ''')
     nameField.setDisabled(True)
     nameField.setFixedWidth(75)
@@ -2236,7 +2250,7 @@ def character_sheet_frame(character_id):
     classLabel.setAlignment(QtCore.Qt.AlignCenter)
     classField = QLineEdit(character.c_class)
     classField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     classField.setDisabled(True)
     classField.setFixedWidth(75)
@@ -2251,7 +2265,7 @@ def character_sheet_frame(character_id):
     levelLabel.setAlignment(QtCore.Qt.AlignCenter)
     levelField = QLineEdit(str(character.level))
     levelField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     levelField.setDisabled(True)
     levelField.setFixedWidth(75)
@@ -2266,7 +2280,7 @@ def character_sheet_frame(character_id):
     backgroundLabel.setAlignment(QtCore.Qt.AlignCenter)
     backgroundField = QLineEdit(character.background)
     backgroundField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     backgroundField.setDisabled(True)
     backgroundField.setFixedWidth(75)
@@ -2281,7 +2295,7 @@ def character_sheet_frame(character_id):
     playerLabel.setAlignment(QtCore.Qt.AlignCenter)
     playerField = QLineEdit(character.user)
     playerField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     playerField.setDisabled(True)
     playerField.setFixedWidth(75)
@@ -2296,7 +2310,7 @@ def character_sheet_frame(character_id):
     raceLabel.setAlignment(QtCore.Qt.AlignCenter)
     raceField = QLineEdit(character.race)
     raceField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     raceField.setDisabled(True)
     raceField.setFixedWidth(75)
@@ -2311,7 +2325,7 @@ def character_sheet_frame(character_id):
     alignmentLabel.setAlignment(QtCore.Qt.AlignCenter)
     alignmentField = QLineEdit(character.alignment)
     alignmentField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     alignmentField.setFixedWidth(75)
     alignmentField.setAlignment(QtCore.Qt.AlignCenter)
@@ -2325,7 +2339,7 @@ def character_sheet_frame(character_id):
     expLabel.setAlignment(QtCore.Qt.AlignCenter)
     expField = QLineEdit(str(character.exp))
     expField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     expField.setFixedWidth(75)
     expField.setAlignment(QtCore.Qt.AlignCenter)
@@ -2339,7 +2353,7 @@ def character_sheet_frame(character_id):
     inspirationLabel.setAlignment(QtCore.Qt.AlignCenter)
     inspirationField = QLineEdit(str(character.inspiration))
     inspirationField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     inspirationField.setFixedWidth(75)
     inspirationField.setAlignment(QtCore.Qt.AlignCenter)
@@ -2353,7 +2367,7 @@ def character_sheet_frame(character_id):
     profLabel.setAlignment(QtCore.Qt.AlignCenter)
     profField = QLineEdit(str(character.get_proficiency_bonus()))
     profField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     profField.setDisabled(True)
     profField.setFixedWidth(75)
@@ -2368,7 +2382,7 @@ def character_sheet_frame(character_id):
     strLabel.setAlignment(QtCore.Qt.AlignCenter)
     strField = QLineEdit(str(character.strength))
     strField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     strField.setFixedWidth(75)
     strField.setAlignment(QtCore.Qt.AlignCenter)
@@ -2385,7 +2399,7 @@ def character_sheet_frame(character_id):
     dexLabel.setAlignment(QtCore.Qt.AlignCenter)
     dexField = QLineEdit(str(character.dexterity))
     dexField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     dexField.setFixedWidth(75)
     dexField.setAlignment(QtCore.Qt.AlignCenter)
@@ -2402,7 +2416,7 @@ def character_sheet_frame(character_id):
     constLabel.setAlignment(QtCore.Qt.AlignCenter)
     constField = QLineEdit(str(character.constitution))
     constField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     constField.setFixedWidth(75)
     constField.setAlignment(QtCore.Qt.AlignCenter)
@@ -2419,7 +2433,7 @@ def character_sheet_frame(character_id):
     intLabel.setAlignment(QtCore.Qt.AlignCenter)
     intField = QLineEdit(str(character.intelligence))
     intField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     intField.setFixedWidth(75)
     intField.setAlignment(QtCore.Qt.AlignCenter)
@@ -2436,7 +2450,7 @@ def character_sheet_frame(character_id):
     wisLabel.setAlignment(QtCore.Qt.AlignCenter)
     wisField = QLineEdit(str(character.wisdom))
     wisField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     wisField.setFixedWidth(75)
     wisField.setAlignment(QtCore.Qt.AlignCenter)
@@ -2453,7 +2467,7 @@ def character_sheet_frame(character_id):
     chaLabel.setAlignment(QtCore.Qt.AlignCenter)
     chaField = QLineEdit(str(character.charisma))
     chaField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     chaField.setFixedWidth(75)
     chaField.setAlignment(QtCore.Qt.AlignCenter)
@@ -2507,7 +2521,7 @@ def character_sheet_frame(character_id):
     armorLabel.setAlignment(QtCore.Qt.AlignCenter)
     armorField = QLineEdit(str(character.armor_class))
     armorField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     armorField.setFixedWidth(75)
     armorField.setAlignment(QtCore.Qt.AlignCenter)
@@ -2521,7 +2535,7 @@ def character_sheet_frame(character_id):
     speedLabel.setAlignment(QtCore.Qt.AlignCenter)
     speedField = QLineEdit(str(character.speed))
     speedField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     speedField.setFixedWidth(75)
     speedField.setAlignment(QtCore.Qt.AlignCenter)
@@ -2535,7 +2549,7 @@ def character_sheet_frame(character_id):
     hpLabel.setAlignment(QtCore.Qt.AlignCenter)
     hpField = QLineEdit(str(character.current_hit_points))
     hpField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     hpField.setFixedWidth(25)
     hpField.setAlignment(QtCore.Qt.AlignCenter)
@@ -2553,7 +2567,7 @@ def character_sheet_frame(character_id):
     hitDiceLabel.setAlignment(QtCore.Qt.AlignCenter)
     hitDiceField = QLineEdit(str(character.no_hit_dice))
     hitDiceField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     hitDiceField.setFixedWidth(25)
     hitDiceField.setAlignment(QtCore.Qt.AlignCenter)
@@ -2571,7 +2585,7 @@ def character_sheet_frame(character_id):
     deathSuccessLabel.setAlignment(QtCore.Qt.AlignCenter)
     deathSuccessField = QLineEdit(str(character.death_saving_throw_successes))
     deathSuccessField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     deathSuccessField.setFixedWidth(25)
     deathSuccessField.setAlignment(QtCore.Qt.AlignCenter)
@@ -2589,7 +2603,7 @@ def character_sheet_frame(character_id):
     deathFailureLabel.setAlignment(QtCore.Qt.AlignCenter)
     deathFailureField = QLineEdit(str(character.death_saving_throw_failures))
     deathFailureField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     deathFailureField.setFixedWidth(25)
     deathFailureField.setAlignment(QtCore.Qt.AlignCenter)
@@ -2607,7 +2621,7 @@ def character_sheet_frame(character_id):
     traitsLabel.setAlignment(QtCore.Qt.AlignCenter)
     traitsField = QTextEdit(character.features_traits)
     traitsField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     traitsField.setFixedWidth(250)
     traitsField.setFixedHeight(125)
@@ -2622,7 +2636,7 @@ def character_sheet_frame(character_id):
     profLangLabel.setAlignment(QtCore.Qt.AlignCenter)
     profLangField = QTextEdit(character.proficiencies_languages)
     profLangField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     profLangField.setFixedWidth(250)
     profLangField.setFixedHeight(125)
@@ -2637,7 +2651,7 @@ def character_sheet_frame(character_id):
     eqLabel.setAlignment(QtCore.Qt.AlignCenter)
     eqField = QTextEdit(character.equipment)
     eqField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     eqField.setFixedWidth(250)
     eqField.setFixedHeight(125)
@@ -2652,7 +2666,7 @@ def character_sheet_frame(character_id):
     spellLabel.setAlignment(QtCore.Qt.AlignCenter)
     spellField = QTextEdit(str(character.spells_list))
     spellField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     spellField.setFixedWidth(250)
     spellField.setFixedHeight(125)
@@ -2667,7 +2681,7 @@ def character_sheet_frame(character_id):
     grid.addWidget(notesLabel, 12, 0)
     notesField = QTextEdit(character.notes)
     notesField.setStyleSheet('''color: black;
-            background-color: white;
+            background-color: whitesmoke;
     ''')
     notesField.setFixedWidth(800)
     notesField.setFixedHeight(125)
